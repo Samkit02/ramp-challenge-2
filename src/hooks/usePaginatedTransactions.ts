@@ -13,7 +13,12 @@ export function usePaginatedTransactions(): PaginatedTransactionsResult {
     const response = await fetchWithCache<PaginatedResponse<Transaction[]>, PaginatedRequestParams>(
       "paginatedTransactions",
       {
-        page: paginatedTransactions === null ? 0 : paginatedTransactions.nextPage,
+        page:
+          paginatedTransactions === null
+            ? 0
+            : paginatedTransactions.nextPage
+            ? paginatedTransactions.nextPage
+            : 0,
       }
     )
 
@@ -22,7 +27,7 @@ export function usePaginatedTransactions(): PaginatedTransactionsResult {
         return response
       }
 
-      return { data: response.data, nextPage: response.nextPage }
+      return { data: [...previousResponse.data, ...response.data], nextPage: response.nextPage }
     })
   }, [fetchWithCache, paginatedTransactions])
 

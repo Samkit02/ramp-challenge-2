@@ -1,3 +1,4 @@
+// types.ts
 import { Employee, PaginatedResponse, Transaction } from "../utils/types"
 
 type UseTypeBaseResult<TValue> = {
@@ -14,7 +15,9 @@ type UseTypeBaseByIdResult<TValue> = UseTypeBaseResult<TValue> & {
   fetchById: (id: string) => Promise<void>
 }
 
-export type EmployeeResult = UseTypeBaseAllResult<Employee[] | null>
+export type EmployeeResult = UseTypeBaseAllResult<Employee[] | null> & {
+  loaded: boolean
+}
 
 export type PaginatedTransactionsResult = UseTypeBaseAllResult<PaginatedResponse<Transaction[]> | null>
 
